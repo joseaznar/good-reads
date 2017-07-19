@@ -1,7 +1,7 @@
 from django.db import models
 from modules.Authors.models import Author
 from django.contrib.postgres.fields import ArrayField
-#from modules.Users.models import *
+# from modules.Users.models import *
 from django.conf import settings
 
 # Create your models here.
@@ -30,8 +30,15 @@ class Book(models.Model):
         size=5
     )
 
+    def __str__(self):
+        return "Libro %s" % self.name
+
 
 class Coments(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     comment = models.TextField()
+
+    def __str__(self):
+        return "Comment from %s about %s" % (self.user.nombre, self.book.name)
